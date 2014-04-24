@@ -1,0 +1,50 @@
+
+#topbanner{
+    width: 100%;
+}
+#topbanner h1{
+    text-align: center;
+}
+#topimg{
+    width: 100%;
+    height: 100px;
+}
+#filtcontdiv{
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+    height: 100px;
+    padding-top: 35px;
+    padding-bottom: 50px;
+    background-color: rgba(0,128,0,0.3);
+    
+}
+#filtcontdiv input{
+    margin-right: 10%;
+}
+#filtcontdiv select{
+
+    width: 150px;
+
+} 
+
+#displaydiv{
+    margin-top: 2%;
+    margin-left: 10%;
+    width: 100%;
+    
+}
+
+#barchartdiv{
+    //background-color: red;
+    width: 50%;
+
+}
+#piechardiv{
+    //background-color: red;
+    width: 50%;
+}
+.center{
+    padding-left: 30%;
+
+}
