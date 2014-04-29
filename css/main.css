@@ -1,16 +1,21 @@
+#headercontdiv{
 
-#topbanner{
+    margin: 0;
     width: 100%;
-}
-#topbanner h1{
     text-align: center;
+    height: 100px;
+    padding-top: 5px;
+    background-color: rgba(0,128,0,0.3);
+    color: black;
+    
 }
+
 #topimg{
     width: 100%;
     height: 100px;
 }
 #filtcontdiv{
-    margin-top: 5px;
+    margin-top: 0px;
     width: 100%;
     text-align: center;
     height: 100px;
@@ -20,31 +25,52 @@
     
 }
 #filtcontdiv input{
-    margin-right: 10%;
+    margin-right: 5%;
 }
 #filtcontdiv select{
-
     width: 150px;
-
+    margin-right: 2%;
+    color: white;
 } 
-
-#displaydiv{
-    margin-top: 2%;
-    margin-left: 10%;
+#SearchResultLbl{
+    margin: 0;
     width: 100%;
+    text-align: center;
+    height: 100px;
+    padding-top: 5px;
+    background-color: rgba(0,105, 148,0.4);
+    color: black;
+}
+#srchcount{
+    font-size: 44px;
+}
+#displaydiv{
+    /*margin-top: 2%;*/
+    margin-top: 0px;
+    padding-top: 20px;
+    width: 100%;
+    background-color: rgba(0,105, 148,0.4);
     
 }
 
 #barchartdiv{
-    //background-color: red;
+    margin-right: auto;
+    margin-left: auto;
     width: 50%;
 
 }
 #piechardiv{
-    //background-color: red;
+    margin-right: auto;
+    margin-left: auto;
     width: 50%;
 }
 .center{
     padding-left: 30%;
 
+}
+#sort{
+    
+}
+#submitbtn{
+    width: 125px;
 }

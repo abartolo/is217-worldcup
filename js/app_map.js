@@ -4,7 +4,7 @@
 			    // create AmMap object
 			    var map = new AmCharts.AmMap();
 			    // set path to images
-			    map.pathToImages = "../ammap/images/";
+			    map.pathToImages = "js/ammap/images/";
 			    
 			    /* create data provider object
 			     mapVar tells the map name of the variable of the map data. You have to
@@ -36,11 +36,15 @@
 			    };
                             map.zoomOnDoubleClick = false;
                             map.mouseWheelZoomEnabled = true;
-                                                       
+                            //Print out object                           
                             console.log(map);
                             
                             map.addListener("clickMapObject", function (event) {
                                 
+                                //My Javascript
+                                selcountry.set(event.mapObject.id,event.mapObject.title);
+                                GetData();
+
                                 console.log(event.mapObject.id);
                                 console.log(event.mapObject.title);
                                 
