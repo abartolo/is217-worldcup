@@ -35,7 +35,7 @@
                                 
 			    };
                             map.zoomOnDoubleClick = false;
-                            map.mouseWheelZoomEnabled = true;
+                            map.mouseWheelZoomEnabled = false;
                             //Print out object                           
                             console.log(map);
                             
