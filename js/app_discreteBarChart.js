@@ -44,8 +44,6 @@ historicalBarChart = [
 ];
 
 
-
-
 nv.addGraph(function() {  
   var chart = nv.models.discreteBarChart()
       .x(function(d) { return d.label })

@@ -8,16 +8,17 @@ function scrollIntoView(eleID) {
 function GetData(){
     var inputCountry = document.getElementById('countryid');
     document.getElementById('srchcount').innerHTML = inputCountry.value;
+    console.log('Getting data for ' + inputCountry.value);
+    callDB();
     setTimeout(function(){EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0);},1000);
     //setTimeout(EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0),3000);
     //EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0);
     //document.getElementById("srchcount").scrollIntoView();
-    console.log('Getting data for ' + inputCountry.value);
+    
 }
 
 //Creating function that grabs the clicked country and displays it inside search field
 var countrySelected = function(){
-    
     var countryID = "";
     var countryName = "";
     
@@ -31,98 +32,44 @@ var countrySelected = function(){
             
             var inputCountry = document.getElementById('countryid');
             inputCountry.value = countryName.trim();
-            
             //inputCountry.focus();
-            
         }
     };
-    
 };
+
+
 
 var selcountry = new countrySelected;
 
+var httpObject = HTTPObj.getInstance();
+//var httpObject2 = HTTPObj.getInstance();
 
+//alert('Are these the same? ' + (httpObject === httpObject2)  );
 
-var EPPZScrollTo =
-{
-    /**
-     * Helpers.
-     */
-    documentVerticalScrollPosition: function()
-    {
-        if (self.pageYOffset) return self.pageYOffset; // Firefox, Chrome, Opera, Safari.
-        if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop; // Internet Explorer 6 (standards mode).
-        if (document.body.scrollTop) return document.body.scrollTop; // Internet Explorer 6, 7 and 8.
-        return 0; // None of the above.
-    },
-
-    viewportHeight: function()
-    { return (document.compatMode === "CSS1Compat") ? document.documentElement.clientHeight : document.body.clientHeight; },
-
-    documentHeight: function()
-    { return (document.height !== undefined) ? document.height : document.body.offsetHeight; },
-
-    documentMaximumScrollPosition: function()
-    { return this.documentHeight() - this.viewportHeight(); },
-
-    elementVerticalClientPositionById: function(id)
-    {
-        var element = document.getElementById(id);
-        var rectangle = element.getBoundingClientRect();
-        return rectangle.top;
-    },
-
-    /**
-     * Animation tick.
-     */
-    scrollVerticalTickToPosition: function(currentPosition, targetPosition)
-    {
-        var filter = 0.2;
-        var fps = 25;/*60*/
-        var difference = parseFloat(targetPosition) - parseFloat(currentPosition);
-
-        // Snap, then stop if arrived.
-        var arrived = (Math.abs(difference) <= 0.5);
-        if (arrived)
-        {
-            // Apply target.
-            scrollTo(0.0, targetPosition);
-            return;
+function callDB(){
+    // Insert correct limnk depending on variables
+    httpObject.open('GET', 'http://davidg.io:2014/api/Mexico', true); /*http://ip.jsontest.com/*/
+    httpObject.send(null);
+    httpObject.onreadystatechange = function(){
+        if (httpObject.readyState === 4) {
+          if (httpObject.status === 200) {
+            //Everything is good, the response is received
+            var d = new Date();
+            var n = d.getTime();
+            
+            console.log('Just got a response from Server! '+ n);
+            console.log(httpObject.responseText);
+            
+          } else {
+            //Incorret status
+            alert('incorrect status');
+          }
+        }else{
+            //Still not ready
+            console.log('Still not ready'); 
         }
+    };   
+}
 
-        // Filtered position.
-        currentPosition = (parseFloat(currentPosition) * (1.0 - filter)) + (parseFloat(targetPosition) * filter);
 
-        // Apply target.
-        scrollTo(0.0, Math.round(currentPosition));
 
-        // Schedule next tick.
-        setTimeout("EPPZScrollTo.scrollVerticalTickToPosition("+currentPosition+", "+targetPosition+")", (1000 / fps));
-    },
-
-    /**
-     * For public use.
-     *
-     * @param id The id of the element to scroll to.
-     * @param padding Top padding to apply above element.
-     */
-    scrollVerticalToElementById: function(id, padding)
-    {
-        var element = document.getElementById(id);
-        if (element == null)
-        {
-            console.warn('Cannot find element with id \''+id+'\'.');
-            return;
-        }
-
-        var targetPosition = this.documentVerticalScrollPosition() + this.elementVerticalClientPositionById(id) - padding;
-        var currentPosition = this.documentVerticalScrollPosition();
-
-        // Clamp.
-        var maximumScrollPosition = this.documentMaximumScrollPosition();
-        if (targetPosition > maximumScrollPosition) targetPosition = maximumScrollPosition;
-
-        // Start animation.
-        this.scrollVerticalTickToPosition(currentPosition, targetPosition);
-    }
-};
