@@ -5,71 +5,69 @@ function scrollIntoView(eleID) {
    }
 }
 /* When a country is selected OR submited */
-function GetData(){
-    var inputCountry = document.getElementById('countryid');
-    document.getElementById('srchcount').innerHTML = inputCountry.value;
-    console.log('Getting data for ' + inputCountry.value);
-    callDB();
-    setTimeout(function(){EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0);},1000);
+function TransitionClick(tmp){
+    var inputCountry = tmp;
+    document.getElementById('srchcount').innerHTML = inputCountry;
+    console.log('Transition Function Executing');
+    //callDB();
+    setTimeout(function(){EPPZScrollTo.scrollVerticalToElementById('SearchResultLbl', 0);},1000);
     //setTimeout(EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0),3000);
     //EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0);
     //document.getElementById("srchcount").scrollIntoView();
     
 }
 
-//Creating function that grabs the clicked country and displays it inside search field
-var countrySelected = function(){
-    var countryID = "";
-    var countryName = "";
+
+function FilterCountry(ctry){
     
-    return{
-        get: function(){
-            alert('Country ID = ' + countryID +' Country Name: '+ countryName);
-        },
-        set: function(id,title){
-            countryID = id;
-            countryName = title;
+    if (ctry === 'Russian Federation'){
+        return 'Russia';
+    }else if ( ctry === 'United States'){
+        return 'USA';
+    }else{
+        return ctry;
+    }
+    
+} 
+
+var callDB = function(){
+     
+    
+    return {
+        apicall: function(selctry){
             
-            var inputCountry = document.getElementById('countryid');
-            inputCountry.value = countryName.trim();
-            //inputCountry.focus();
+            var country = FilterCountry(selctry);
+           //Create URL
+            var api_url = 'http://davidg.io:2014/api/' + country ;
+            console.log(api_url);
+
+            //Insert correct limnk depending on variables
+            httpObject.open('GET', api_url , false); /*Need to wait for Server to Respond*/
+            httpObject.send(null);
+            var d = new Date();
+                    var n = d.getTime();
+
+                    console.log('Just got a response from Server! '+ n);
+                    console.log(httpObject.responseText);
+                    
+                    var json = JSON.parse(httpObject.responseText);
+                    if (json !== null && json.length > 0){
+                        console.log('now I am going to return B!!!!');
+                        return json; 
+                    }else{
+                        console.log('RETURNING FALSE - ERROR');
+                        return false;
+                    }
+
         }
+        
     };
+      
 };
 
 
-
-var selcountry = new countrySelected;
+var callDBobj = new callDB;
 
 var httpObject = HTTPObj.getInstance();
-//var httpObject2 = HTTPObj.getInstance();
-
-//alert('Are these the same? ' + (httpObject === httpObject2)  );
-
-function callDB(){
-    // Insert correct limnk depending on variables
-    httpObject.open('GET', 'http://davidg.io:2014/api/Mexico', true); /*http://ip.jsontest.com/*/
-    httpObject.send(null);
-    httpObject.onreadystatechange = function(){
-        if (httpObject.readyState === 4) {
-          if (httpObject.status === 200) {
-            //Everything is good, the response is received
-            var d = new Date();
-            var n = d.getTime();
-            
-            console.log('Just got a response from Server! '+ n);
-            console.log(httpObject.responseText);
-            
-          } else {
-            //Incorret status
-            alert('incorrect status');
-          }
-        }else{
-            //Still not ready
-            console.log('Still not ready'); 
-        }
-    };   
-}
-
 
 
