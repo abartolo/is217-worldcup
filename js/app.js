@@ -10,7 +10,7 @@ function TransitionClick(tmp){
     document.getElementById('srchcount').innerHTML = inputCountry;
     console.log('Transition Function Executing');
     //callDB();
-    setTimeout(function(){EPPZScrollTo.scrollVerticalToElementById('SearchResultLbl', 0);},1000);
+    setTimeout(function(){EPPZScrollTo.scrollVerticalToElementById('SearchResultLbl', 0);},800);
     //setTimeout(EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0),3000);
     //EPPZScrollTo.scrollVerticalToElementById('filtcontdiv', 0);
     //document.getElementById("srchcount").scrollIntoView();
